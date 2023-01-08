@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Hello</title>
@@ -8,5 +8,6 @@
 <strong>Hello,buddy!</strong>
 <a href="/spring-mvc-app/goodbye">href1</a> or <a href="/spring-mvc-app/exit">exitter</a>
   <a href="/spring-mvc-app/first/hello?name=Timur&surname=prerefulkan">HREF</a>
+<p th:text="${message}" />
 </body>
 </html>
