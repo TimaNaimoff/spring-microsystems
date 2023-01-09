@@ -23,4 +23,9 @@ public class PersonDAO {
     public Person getOnePerson(int id){
         return list.stream().filter(e->e.getId()==(long)id).findAny().orElse(null);
     }
+
+    public void save(Person person) {
+        person.setId(++PEOPLE_COUNT);
+        list.add(person);
+    }
 }
