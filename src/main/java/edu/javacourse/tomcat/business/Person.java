@@ -1,9 +1,8 @@
 package edu.javacourse.tomcat.business;
 import javax.validation.constraints.Min;
-import org.hibernate.validator.constraints.Email;
 import javax.validation.constraints.Size;
-import org.hibernate.validator.constraints.NotEmpty;
-
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Email;
 public class Person {
     private Long id;
 

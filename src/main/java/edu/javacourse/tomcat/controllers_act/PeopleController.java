@@ -10,14 +10,16 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLException;
+
 @Controller
 @RequestMapping("/people")
 public class PeopleController {
     @Autowired
     private PersonDAO dao;
     @GetMapping()
-    public String index(Model model){
-        model.addAttribute("listOfPeoples",dao.getList());
+    public String index(Model model) throws SQLException {
+        model.addAttribute("listOfPeoples",dao.index());
         return "/people/index";
     }
     @GetMapping("/{id}")
@@ -48,9 +50,9 @@ public class PeopleController {
               dao.update(id,person);
               return "redirect:/people";
       }
-      @DeleteMapping("/{id}")
-      public String delete(@PathVariable("id")int id){
-        dao.remove(id);
-        return "redirect:/people";
-      }
+//      @DeleteMapping("/{id}")
+//      public String delete(@PathVariable("id")int id){
+//        dao.remove(id);
+//        return "redirect:/people";
+//      }
 }
