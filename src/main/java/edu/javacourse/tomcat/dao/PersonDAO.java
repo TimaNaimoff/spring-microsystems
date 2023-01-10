@@ -12,9 +12,9 @@ public class PersonDAO {
     private List<Person> list;
     {
         list=new ArrayList<>();
-        list.add(new Person(++PEOPLE_COUNT,"Kolya"));
-        list.add(new Person(++PEOPLE_COUNT,"Stephan"));
-        list.add(new Person(++PEOPLE_COUNT,"Pjujeck"));
+        list.add(new Person(++PEOPLE_COUNT,"Kolya",18,"kolyan09@gmail.com"));
+        list.add(new Person(++PEOPLE_COUNT,"Stephan",21,"steffy@gmail.com"));
+        list.add(new Person(++PEOPLE_COUNT,"Pjujeck",25,"hasulandria@gmail.com"));
     }
 
     public List<Person> getList() {
@@ -27,5 +27,16 @@ public class PersonDAO {
     public void save(Person person) {
         person.setId(++PEOPLE_COUNT);
         list.add(person);
+    }
+
+    public void update(int id, Person person) {
+        Person personter=getOnePerson(id);
+        personter.setName(person.getName());
+        personter.setAge(person.getAge());
+        personter.setEmail(person.getEmail());
+    }
+
+    public void remove(int id) {
+        list.removeIf(e->e.getId()==id);
     }
 }
