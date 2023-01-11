@@ -5,6 +5,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -17,14 +19,19 @@ import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.sql.DataSource;
+import java.util.Objects;
 
 @Configuration
 @ComponentScan("edu.javacourse.tomcat")
 @EnableWebMvc
+@PropertySource("classpath:database.properties")
 public class  SpringConfig implements WebMvcConfigurer {
+    private final Environment environment;
     private final ApplicationContext context;
     @Autowired
-    public SpringConfig(ApplicationContext context){
+    public SpringConfig(ApplicationContext context,Environment environment)
+    {
+        this.environment=environment;
         this.context=context;
     }
     @Bean
@@ -45,10 +52,10 @@ public class  SpringConfig implements WebMvcConfigurer {
     @Bean
     public DataSource getDataSource(){
         DriverManagerDataSource source = new DriverManagerDataSource();
-        source.setDriverClassName("org.postgresql.Driver");
-        source.setUrl("jdbc:postgresql://localhost:5432/al_db");
-        source.setUsername("postgres");
-        source.setPassword("TERMIT006WIN");
+        source.setDriverClassName(Objects.requireNonNull(environment.getProperty("db.driver")));
+        source.setUrl(environment.getProperty("db.url"));
+        source.setUsername(environment.getProperty("db.login"));
+        source.setPassword(environment.getProperty("db.password"));
         return source;
     }
     @Bean
