@@ -5,6 +5,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -14,6 +16,7 @@ import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.sql.DataSource;
 
 @Configuration
 @ComponentScan("edu.javacourse.tomcat")
@@ -38,6 +41,19 @@ public class  SpringConfig implements WebMvcConfigurer {
         engine.setTemplateResolver(templateResolver());
         engine.setEnableSpringELCompiler(true);
         return engine;
+    }
+    @Bean
+    public DataSource getDataSource(){
+        DriverManagerDataSource source = new DriverManagerDataSource();
+        source.setDriverClassName("org.postgresql.Driver");
+        source.setUrl("jdbc:postgresql://localhost:5432/al_db");
+        source.setUsername("postgres");
+        source.setPassword("TERMIT006WIN");
+        return source;
+    }
+    @Bean
+    public JdbcTemplate getJdbcTemplate(){
+        return new JdbcTemplate(getDataSource());
     }
     @Override
     public void configureViewResolvers(ViewResolverRegistry registry){

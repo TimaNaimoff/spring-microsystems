@@ -50,9 +50,9 @@ public class PeopleController {
               dao.update(id,person);
               return "redirect:/people";
       }
-//      @DeleteMapping("/{id}")
-//      public String delete(@PathVariable("id")int id){
-//        dao.remove(id);
-//        return "redirect:/people";
-//      }
+      @DeleteMapping("/{id}")
+      public String delete(@PathVariable("id")int id){
+        dao.remove(id);
+        return "redirect:/people";
+      }
 }
