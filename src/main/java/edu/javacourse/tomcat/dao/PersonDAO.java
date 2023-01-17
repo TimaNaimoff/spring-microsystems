@@ -26,11 +26,15 @@ public class PersonDAO {
             "UPDATE person SET name = ?, age = ? , email = ? WHERE person_id = ?";
     private static final String DELETE_PERSON=
             "DELETE FROM person WHERE person_id = ?";
-
+    private static final String SELECT_BY_EMAIL="SELECT * FROM person WHERE" +
+            " email LIKE ?";
 
     public Person getOnePerson(int id){
         return template.query(SELECT_ONE_PERSON,new Object[]{id},new PersonMapper())
                 .stream().findAny().orElse(null);
+    }
+    public boolean checkByEmail(String email){
+        return template.query(SELECT_BY_EMAIL,new Object[]{email},new PersonMapper()).size()!=0;
     }
     public List<Person>index() throws SQLException {
         return template.query(SELECT_ALL_PEOPLES,new PersonMapper());
