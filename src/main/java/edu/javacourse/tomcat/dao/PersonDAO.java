@@ -21,9 +21,9 @@ public class PersonDAO {
     private static final String SELECT_ONE_PERSON =
             "SELECT * FROM person WHERE person_id = ?";
     private static final String ADD_ONE_PERSON =
-            "INSERT INTO person(name,age,email) VALUES(?,?,?)";
+            "INSERT INTO person(name,age,email,address) VALUES(?,?,?,?)";
     private static final String UPDATE_PERSON=
-            "UPDATE person SET name = ?, age = ? , email = ? WHERE person_id = ?";
+            "UPDATE person SET name = ?, age = ? , email = ? , address = ? WHERE person_id = ?";
     private static final String DELETE_PERSON=
             "DELETE FROM person WHERE person_id = ?";
     private static final String SELECT_BY_EMAIL="SELECT * FROM person WHERE" +
@@ -41,11 +41,11 @@ public class PersonDAO {
     }
 
     public void save(Person person)  {
-        template.update(ADD_ONE_PERSON,person.getName(),person.getAge(),person.getEmail());
+        template.update(ADD_ONE_PERSON,person.getName(),person.getAge(),person.getEmail(),person.getAddress());
     }
 
     public void update(int id, Person person) {
-         template.update(UPDATE_PERSON,person.getName(),person.getAge(),person.getEmail(),id);
+         template.update(UPDATE_PERSON,person.getName(),person.getAge(),person.getEmail(),person.getAddress(),id);
 
     }
 ;
@@ -87,7 +87,7 @@ public class PersonDAO {
         List<Person>people=new ArrayList<>();
         int counter=0;
         while(counter<1001) {
-            people.add(new Person("Tikr"+counter,counter,"aawpe"+counter+"@gmail.com"));
+            people.add(new Person("Tikr"+counter,counter,"aawpe"+counter+"@gmail.com","abcda"));
             counter++;
         }
         return people;
