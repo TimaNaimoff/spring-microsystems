@@ -5,8 +5,13 @@
     <title>Назначит администратора</title>
 </head>
 <body>
-    <form th:method="POST" action="@{/admin/add}">
-
-        </form>
+    <form th:method="PATCH" th:action="@{/admin/add}">
+        <label for="person">Choose people</label>
+        <select th:object="${person}" th:field="*{id}" id="person">
+            <option th:each="person : ${people}" th:value="${person.getId()}"
+            th:text="${person.getName()}"></option>
+        </select>
+        <input type="submit" value="Назначить админом"/>
+    </form>
 </body>
 </html>

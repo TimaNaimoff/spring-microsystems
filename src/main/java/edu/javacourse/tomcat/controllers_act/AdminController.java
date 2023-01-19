@@ -4,10 +4,7 @@ import edu.javacourse.tomcat.business.Person;
 import edu.javacourse.tomcat.dao.PersonDAO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
 
@@ -20,11 +17,12 @@ public class AdminController {
     }
     @GetMapping()
     public String getAdmin(Model model, @ModelAttribute("person") Person person) throws SQLException {
-        model.addAttribute("listOfPeoples",personDAO.index());
-        return "adminus";
+        model.addAttribute("people",personDAO.index());
+        return "admin/adminus";
     }
-    @PostMapping("/add")
-    public String postAdmin(){
-
+    @PatchMapping("/add")
+    public String makeAdmin(@ModelAttribute("person")Person person){
+        System.out.println(person.getId());
+        return "redirect:/people";
     }
 }
