@@ -4,6 +4,7 @@ import edu.javacourse.tomcat.business.Book;
 import edu.javacourse.tomcat.dao.BookDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -16,15 +17,17 @@ public class BookController {
         this.bookDao=bookDao;
     }
     @GetMapping()
-    public String index(){
+    public String index(Model model){
+        model.addAttribute("books",bookDao.selectAllBooks());
         return "book/books";
+
     }
     @PostMapping("/new")
     public String addNewBook(@ModelAttribute("book") Book book){
          bookDao.insert(book);
          return "redirect:/books";
      }
-     @GetMapping("{id}/update")
+     @GetMapping("/{id}/update")
      public String getUpd(){
         return "book/edit";
      }
@@ -33,7 +36,13 @@ public class BookController {
         bookDao.update(id,book);
         return "redirect:/books";
     }
-    @DeleteMapping("{/id}")
+    @GetMapping("/{id}")
+    public String show(@PathVariable("id")int id,Model model){
+        model.addAttribute("book",bookDao.getBook(id));
+        model.addAttribute("person",bookDao.getPersoner(id));
+        return "book/show";
+    }
+    @DeleteMapping("/{id}")
     public String deleteBook(@PathVariable("id")int id){
         bookDao.delete(id);
         return "redirect:/books";
