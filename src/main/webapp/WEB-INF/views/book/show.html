@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http:/thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -10,12 +10,12 @@
 <p th:text="${book.getAuthorName()}">VALUE</p>
 <p th:text="${book.getAge()}">VALUE</p>
 <br/>
-<strong><p th:text="${person.getName()}">VALUE</p></strong>>
+<p th:text="${person.getName()}">VALUE</p>
 
-<a th:href="@{/books/{id}/edit(id=${book.getId()})}">Edit</a>
+<a th:href="@{/books/{id}/update(id=${book.getId()})}">Edit</a>
 
 <form th:method="DELETE" th:action="@{/books/{id}(id=${book.getId()})}">
-    <input type="submit" value="Delete book"/>
+    <input type="submit" value="Delete"/>
 </form>
 
 </body>

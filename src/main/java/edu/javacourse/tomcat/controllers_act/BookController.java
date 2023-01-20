@@ -19,10 +19,15 @@ public class BookController {
     @GetMapping()
     public String index(Model model){
         model.addAttribute("books",bookDao.selectAllBooks());
-        return "book/books";
+        return "/book/books";
 
     }
-    @PostMapping("/new")
+    @GetMapping("/new")
+    public String addNewBookGet(Model model){
+        model.addAttribute("book",new Book());
+        return "/book/new";
+    }
+    @PostMapping
     public String addNewBook(@ModelAttribute("book") Book book){
          bookDao.insert(book);
          return "redirect:/books";
@@ -40,7 +45,7 @@ public class BookController {
     public String show(@PathVariable("id")int id,Model model){
         model.addAttribute("book",bookDao.getBook(id));
         model.addAttribute("person",bookDao.getPersoner(id));
-        return "book/show";
+        return "/book/show";
     }
     @DeleteMapping("/{id}")
     public String deleteBook(@PathVariable("id")int id){

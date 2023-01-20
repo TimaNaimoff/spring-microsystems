@@ -12,11 +12,10 @@ import java.util.List;
 public class BookDao {
     private final JdbcTemplate template;
     private static final String SELECT_ALL="SELECT * FROM book";
-    private static final String SELECT_ONE_BOOK_PER="SELECT p FROM book b" +
-            " LEFT JOIN person p ON p.person_id=b.person_id WHERE b.person_id = ?";
+    private static final String SELECT_ONE_BOOK_PER="SELECT p.name,p.age,p.person_id,p.email FROM book b LEFT JOIN person p ON p.person_id=b.person_id WHERE b.person_id = ?";
     private static final String SELECT_ONE_BOOK="" +
             "SELECT * FROM book WHERE book_id = ?";
-    private static final String INSERT_BOOK = "INSERT INTO book(book_name, book_author" +
+    private static final String INSERT_BOOK = "INSERT INTO book(book_name, book_author," +
             "book_year)VALUES(? , ? , ?)";
     private static final String UPDATE_BOOK="UPDATE book SET book_name=? ,book_author = ? ," +
             " book_year=? WHERE book_id = ?";
@@ -34,6 +33,7 @@ public class BookDao {
                 .stream().findAny().orElse(null);
     }
     public Person getPersoner(int id){
+
         return template.query(SELECT_ONE_BOOK_PER,new Object[]{id},new PersonMapper())
                 .stream().findAny().orElse(null);
     }
