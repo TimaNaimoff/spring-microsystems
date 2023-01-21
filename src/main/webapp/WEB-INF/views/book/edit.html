@@ -5,7 +5,7 @@
     <title>Edit book</title>
 </head>
 <body>
-<form th:method="PATCH" th:action="@{/books/{id}(id=${books.getId()})}" th:object="${books}">
+<form th:method="PATCH" th:action="@{/books/{id}(id=${book.getId()})}" th:object="${book}">
     <label for="title">Enter title</label>
     <input type="text" th:field="*{title}" id="title"/>
     <div style="color:red" th:if="${#fields.hasErrors('title')}" th:errors="*title">Title Error</div>

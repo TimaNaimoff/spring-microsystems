@@ -5,7 +5,7 @@ CREATE TABLE book(
    book_name varchar(50)not null,
    book_author varchar(50)not null,
    book_year int CHECK(book_year>1700),
-   person_id integer REFERENCES person(person_id)
+   person_id integer REFERENCES person(person_id)ON DELETE SET NULL
 );
 SELECT * FROM person;
 INSERT INTO book(book_name,book_author,book_year,person_id)VALUES('Elrik from Melnibone','Michael Murkok',1988,1);
