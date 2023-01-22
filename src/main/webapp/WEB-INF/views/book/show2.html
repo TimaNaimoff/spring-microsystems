@@ -10,16 +10,16 @@
 <p th:text="${book.getAuthorName()}">VALUE</p>
 <p th:text="${book.getYear()}">VALUE</p>
 <br/>
-<form th:method="PATCH" th:action="@{/books/{id}/{id2}/update(id=${person.getId()},id2=${book.getId()})}">
+<form th:method="PATCH" th:action="@{/books/{id}/update(id=${book.getId()})}">
     <label for="person">Choose people</label>
     <select th:object="${person}" th:field="*{id}" id="person">
-        <option th:each="persont : ${personi}" th:value="${persont.getId()}"
-                th:text="${persont.getName()}"></option>
+        <option th:each="person : ${personi}" th:value="${person.getId()}"
+                th:text="${person.getName()}"></option>
     </select>
     <input type="submit" value="APPLY"/>
 </form>
 
-<form th:method="DELETE" th:action="@{/books/{id}/del(id=${book.getId()})}">
+<form th:method="DELETE" th:action="@{/books/{id}(id=${book.getId()})}">
     <input type="submit" value="Delete"/>
 </form>
 

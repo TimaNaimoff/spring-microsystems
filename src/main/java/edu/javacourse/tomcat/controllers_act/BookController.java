@@ -44,9 +44,9 @@ public class BookController {
      public String getUpd(@PathVariable("id")int counter,@ModelAttribute("book")Book book){
         return "book/edit";
      }
-     @PatchMapping("/{id}/{id2}/update")
-     public String referBook(@ModelAttribute("person")Person person,@PathVariable("id")int personID,@PathVariable("id2")int bookID){
-        bookDao.addRef(personID,bookID);
+     @PatchMapping("/{id}/update")
+     public String referBook(@ModelAttribute("person")Person person,@PathVariable("id")int bookID){
+        bookDao.addRef(person,bookID);
         return "redirect:/books";
      }
      @PatchMapping("/{id}")
@@ -60,7 +60,6 @@ public class BookController {
         Person person=bookDao.getPersoner(id);
         Map<String,Object>map=new HashMap<>();
         map.put("book",book);
-
         if(person==null){
             map.put("personi",personDAO.index());
             model.addAllAttributes(map);

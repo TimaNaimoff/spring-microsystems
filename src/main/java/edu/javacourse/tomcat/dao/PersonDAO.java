@@ -1,5 +1,6 @@
 package edu.javacourse.tomcat.dao;
 
+import edu.javacourse.tomcat.business.Book;
 import edu.javacourse.tomcat.business.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
@@ -12,10 +13,13 @@ import java.util.List;
 
 @Component
 public class PersonDAO {
-    @Autowired
+
     private final JdbcTemplate template;
-    public PersonDAO(JdbcTemplate template){
+    private final BookDao bookDao;
+    @Autowired
+    public PersonDAO(JdbcTemplate template,BookDao bookDao){
         this.template=template;
+        this.bookDao=bookDao;
     }
     private static final String SELECT_ALL_PEOPLES = "SELECT * FROM person";
     private static final String SELECT_ONE_PERSON =
@@ -28,14 +32,18 @@ public class PersonDAO {
             "DELETE FROM person WHERE person_id = ?";
     private static final String SELECT_BY_EMAIL="SELECT * FROM person WHERE" +
             " email LIKE ?";
-
-
+    private static final String SELECT_BY_NAME="SELECT * FROM person WHERE name LIKE = ?";
+    private static final String SELECT_BOOKS_BY_PERSON_ID=
+            "SELECT * FROM book WHERE person_id = ?";
     public Person getOnePerson(int id){
         return template.query(SELECT_ONE_PERSON,new Object[]{id},new PersonMapper())
                 .stream().findAny().orElse(null);
     }
     public boolean checkByEmail(String email){
         return template.query(SELECT_BY_EMAIL,new Object[]{email},new PersonMapper()).size()!=0;
+    }
+    public boolean checkByName(String name){
+        return template.query(SELECT_BY_NAME,new Object[]{name},new PersonMapper()).size()!=0;
     }
     public List<Person>index() throws SQLException {
         return template.query(SELECT_ALL_PEOPLES,new PersonMapper());
@@ -49,11 +57,13 @@ public class PersonDAO {
          template.update(UPDATE_PERSON,person.getName(),person.getAge(),person.getEmail(),person.getAddress(),id);
 
     }
-;
+
     public void remove(int id) {
         template.update(DELETE_PERSON,id);
     }
-
+    public List<Book>getBooksByPersonID(int personId){
+        return template.query(SELECT_BOOKS_BY_PERSON_ID,new Object[]{personId},new BookMapper());
+    }
     public void testMultipleUpdate() {
         List<Person>people=new ArrayList<>();
         long timer=System.currentTimeMillis();

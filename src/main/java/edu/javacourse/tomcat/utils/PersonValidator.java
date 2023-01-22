@@ -24,7 +24,7 @@ public class PersonValidator implements Validator {
     @Override
     public void validate(Object o, Errors errors) {
         Person person=(Person)o;
-        if(personDAO.checkByEmail(person.getEmail())){
+        if(personDAO.checkByName(person.getName())){
             errors.rejectValue("email","","This is not correct!");
         }
 

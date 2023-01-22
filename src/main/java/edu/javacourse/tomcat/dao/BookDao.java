@@ -12,7 +12,8 @@ import java.util.List;
 public class BookDao {
     private final JdbcTemplate template;
     private static final String SELECT_ALL="SELECT * FROM book";
-    private static final String SELECT_ONE_BOOK_PER="SELECT p.name,p.age,p.person_id,p.email FROM book b LEFT JOIN person p ON p.person_id=b.person_id WHERE b.person_id = ?";
+    private static final String SELECT_ONE_BOOK_PER="" +
+            "SELECT p.name,p.age,p.person_id,p.email FROM book b LEFT JOIN person p ON p.person_id=b.person_id WHERE b.person_id = ?";
     private static final String SELECT_ONE_BOOK="" +
             "SELECT * FROM book WHERE book_id = ?";
     private static final String INSERT_BOOK = "INSERT INTO book(person_id,book_name, book_author," +
@@ -50,11 +51,7 @@ public class BookDao {
     public void deleteRef(int id){
         template.update(DELETE_REF_BOOK_PERSON,id);
     }
-    public void addRef(int personID,int bookID){
-        template.update(ADD_BOOK_TO_PERSON,personID,bookID);
+    public void addRef(Person person,int bookID){
+        template.update(ADD_BOOK_TO_PERSON,person.getId(),bookID);
     }
-
-
-
-
 }

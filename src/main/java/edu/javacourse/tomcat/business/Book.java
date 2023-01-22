@@ -16,7 +16,7 @@ public class Book {
     private String authorName;
     @Min(value=1700,message="Year should be > 1700")
     private Integer year;
-
+    private Integer personId;
     public Book(){
 
     }
@@ -58,6 +58,14 @@ public class Book {
         this.year = year;
     }
 
+    public Integer getPersonId() {
+        return personId;
+    }
+
+    public void setPersonId(Integer personId) {
+        this.personId = personId;
+    }
+
     @Override
     public String toString() {
         return "Book{" +
@@ -65,6 +73,7 @@ public class Book {
                 ", title='" + title + '\'' +
                 ", authorName='" + authorName + '\'' +
                 ", year=" + year +
+                ", personId=" + personId +
                 '}';
     }
 }

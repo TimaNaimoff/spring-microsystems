@@ -2,6 +2,7 @@ package edu.javacourse.tomcat.controllers_act;
 
 
 import edu.javacourse.tomcat.business.Person;
+import edu.javacourse.tomcat.dao.BookDao;
 import edu.javacourse.tomcat.dao.PersonDAO;
 import javax.validation.Valid;
 
@@ -17,10 +18,13 @@ import java.sql.SQLException;
 @Controller
 @RequestMapping("/people")
 public class PeopleController {
-    @Autowired
     private PersonDAO dao;
-    @Autowired
     private PersonValidator personValidator;
+    @Autowired
+    public PeopleController(PersonDAO dao,PersonValidator personValidator){
+        this.dao=dao;
+        this.personValidator=personValidator;
+    }
     @GetMapping()
     public String index(Model model) throws SQLException {
         model.addAttribute("listOfPeoples",dao.index());
@@ -29,7 +33,7 @@ public class PeopleController {
     @GetMapping("/{id}")
     public String show(@PathVariable("id")int id,Model model){
         model.addAttribute("person",dao.getOnePerson(id));
-        
+        model.addAttribute("books",dao.getBooksByPersonID(id));
         return "/people/show";
     }
     @GetMapping("/new")

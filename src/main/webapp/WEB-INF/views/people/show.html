@@ -15,6 +15,11 @@
 <form th:method="DELETE" th:action="@{/people/{id}(id=${person.getId()})}">
     <input type="submit" value="Delete"/>
 </form>
+<br/>
+<div th:each="book:${books}">
+    <a th:href="@{/books/{id}(id=${book.getId()})}"
+       th:text="${book.getTitle()+', '+book.getAuthorName()}">book</a>
+</div>
 
  </body>
 </html>
