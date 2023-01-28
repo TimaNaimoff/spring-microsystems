@@ -9,6 +9,10 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.orm.hibernate5.HibernateTransactionManager;
+import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -20,11 +24,14 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.sql.DataSource;
 import java.util.Objects;
+import java.util.Properties;
 
 @Configuration
 @ComponentScan("edu.javacourse.tomcat")
+@PropertySource("classpath:hibernate.properties")
+@EnableTransactionManagement
 @EnableWebMvc
-@PropertySource("classpath:database.properties")
+
 public class  SpringConfig implements WebMvcConfigurer {
     private final Environment environment;
     private final ApplicationContext context;
@@ -52,15 +59,36 @@ public class  SpringConfig implements WebMvcConfigurer {
     @Bean
     public DataSource getDataSource(){
         DriverManagerDataSource source = new DriverManagerDataSource();
-        source.setDriverClassName(Objects.requireNonNull(environment.getProperty("db.driver")));
-        source.setUrl(environment.getProperty("db.url"));
-        source.setUsername(environment.getProperty("db.login"));
-        source.setPassword(environment.getProperty("db.password"));
+        source.setDriverClassName(Objects.requireNonNull(environment.getProperty("hibernate.driver_class")));
+        source.setUrl(environment.getProperty("hibernate.connection.url"));
+        source.setUsername(environment.getProperty("hibernate.connection.username"));
+        source.setPassword(environment.getProperty("hibernate.connection.password"));
         return source;
     }
+//    @Bean
+//    public JdbcTemplate getJdbcTemplate(){
+//        return new JdbcTemplate(getDataSource());
+//    }
+    private Properties hibernateProperties(){
+        Properties properties=new Properties();
+        properties.put("hibernate.dialect",environment.getProperty("hibernate.dialect"));
+        properties.put("hibernate.show_sql",environment.getProperty("hibernate.show_sql"));
+        return properties;
+    }
     @Bean
-    public JdbcTemplate getJdbcTemplate(){
-        return new JdbcTemplate(getDataSource());
+    public LocalSessionFactoryBean sessionFactory(){
+        LocalSessionFactoryBean sessionFactory=new LocalSessionFactoryBean();
+        sessionFactory.setDataSource(getDataSource());
+        sessionFactory.setPackagesToScan("edu.javacourse.tomcat.business");
+        sessionFactory.setHibernateProperties(hibernateProperties());
+
+        return sessionFactory;
+    }
+    @Bean
+    public PlatformTransactionManager hibernateTransactionManager(){
+        HibernateTransactionManager hibernateTransactionManager=new HibernateTransactionManager();
+        hibernateTransactionManager.setSessionFactory(sessionFactory().getObject());
+        return hibernateTransactionManager;
     }
     @Override
     public void configureViewResolvers(ViewResolverRegistry registry){

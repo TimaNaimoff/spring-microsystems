@@ -13,7 +13,7 @@ INSERT INTO person(name,age,email) VALUES('Qollungirqi',27,'chansanuka@gmail.com
 
 
 SELECT * FROM person;
-SELECT * FROM person_person_id_seq;
+--SELECT * FROM person_person_id_seq;
 
 
 DROP SEQUENCE first_sequence;
