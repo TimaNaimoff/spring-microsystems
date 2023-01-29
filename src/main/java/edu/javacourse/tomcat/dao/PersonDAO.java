@@ -18,10 +18,10 @@ import java.util.List;
 @Component
 public class PersonDAO {
     private final SessionFactory sessionFactory;
-    private final BookDao bookDao;
+//    private final BookDao bookDao;
     @Autowired
-    public PersonDAO(SessionFactory sessionFactory,BookDao bookDao){
-        this.bookDao=bookDao;
+    public PersonDAO(SessionFactory sessionFactory/*,BookDao bookDao*/){
+//        this.bookDao=bookDao;
         this.sessionFactory=sessionFactory;
     }
     @Transactional
