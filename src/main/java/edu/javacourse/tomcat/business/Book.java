@@ -10,7 +10,7 @@ public class Book {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name="book_id")
-    private Long id;
+    private Integer id;
     @Column(name="book_name")
     @NotEmpty(message="Book's name cannot be empty!")
     @Size(min=2,max=50,message="Book's name's interval is from 2 to 50!")
@@ -34,11 +34,11 @@ public class Book {
         this.year=year;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -66,6 +66,13 @@ public class Book {
         this.year = year;
     }
 
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
 
     @Override
     public String toString() {
