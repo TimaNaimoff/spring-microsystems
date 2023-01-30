@@ -35,4 +35,7 @@ public class PeopleService {
     public void delete(int id){
         peopleRepository.deleteById(id);
     }
+    public boolean checkByName(String name){
+        return false;
+    }
 }

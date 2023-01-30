@@ -2,10 +2,10 @@ package edu.javacourse.tomcat.controllers_act;
 
 
 import edu.javacourse.tomcat.business.Person;
-import edu.javacourse.tomcat.dao.PersonDAO;
+//import edu.javacourse.tomcat.dao.PersonDAO;
 import javax.validation.Valid;
 
-import edu.javacourse.tomcat.repo.PeopleRepository;
+//import edu.javacourse.tomcat.repo.PeopleRepository;
 import edu.javacourse.tomcat.services.PeopleService;
 import edu.javacourse.tomcat.utils.PersonValidator;
 import org.springframework.beans.factory.annotation.Autowired;

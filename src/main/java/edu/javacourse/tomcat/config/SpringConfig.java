@@ -13,8 +13,10 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.orm.jpa.JpaTransactionManager;
+import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.LocalEntityManagerFactoryBean;
+import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -93,18 +95,22 @@ public class  SpringConfig implements WebMvcConfigurer {
 //        return sessionFactory;
 //    }
     @Bean
-    public LocalContainerEntityManagerFactoryBean entityFactory(){
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory(){
         final LocalContainerEntityManagerFactoryBean entityManagerFactoryBean=new LocalContainerEntityManagerFactoryBean();
         entityManagerFactoryBean.setDataSource(getDataSource());
         entityManagerFactoryBean.setPackagesToScan("edu.javacourse.tomcat.business");
+        final HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+        entityManagerFactoryBean.setJpaVendorAdapter(vendorAdapter);
+        entityManagerFactoryBean.setJpaProperties(hibernateProperties());
         return entityManagerFactoryBean;
+
     }
     @Bean
-    public PlatformTransactionManager hibernateTransactionManager(){
+    public PlatformTransactionManager transactionManager(){
 //        HibernateTransactionManager hibernateTransactionManager=new HibernateTransactionManager();
 //        hibernateTransactionManager.setSessionFactory(sessionFactory().getObject());
         JpaTransactionManager transactionManager = new JpaTransactionManager();
-        transactionManager.setEntityManagerFactory(entityFactory().getObject());
+        transactionManager.setEntityManagerFactory(entityManagerFactory().getObject());
         return transactionManager;
     }
 
