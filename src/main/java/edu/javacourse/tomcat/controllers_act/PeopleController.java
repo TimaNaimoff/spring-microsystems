@@ -6,6 +6,7 @@ import edu.javacourse.tomcat.business.Person;
 import javax.validation.Valid;
 
 //import edu.javacourse.tomcat.repo.PeopleRepository;
+import edu.javacourse.tomcat.services.BookService;
 import edu.javacourse.tomcat.services.PeopleService;
 import edu.javacourse.tomcat.utils.PersonValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,14 +21,19 @@ import java.sql.SQLException;
 @RequestMapping("/people")
 public class PeopleController {
     private final PeopleService peopleService;
+    private final BookService bookService;
     private PersonValidator personValidator;
     @Autowired
-    public PeopleController(PeopleService peopleService,PersonValidator personValidator){
+    public PeopleController(PeopleService peopleService,PersonValidator personValidator,BookService bookService){
         this.peopleService=peopleService;
         this.personValidator=personValidator;
+        this.bookService=bookService;
     }
     @GetMapping()
     public String index(Model model) throws SQLException {
+        bookService.findByAuthorName("The Endless Book");
+        bookService.findByPerson(peopleService.findAll().get(0));
+        peopleService.test();
         model.addAttribute("listOfPeoples",peopleService.findAll());
         return "/people/index";
     }

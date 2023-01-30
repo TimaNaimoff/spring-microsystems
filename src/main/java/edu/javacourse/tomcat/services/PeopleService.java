@@ -19,6 +19,9 @@ public class PeopleService {
     public List<Person> findAll(){
         return peopleRepository.findAll();
     }
+    public void test(){
+        System.out.println("Testing started");
+    }
     public Person findOnePerson(int id){
         return peopleRepository.findById(id).orElse(null);
     }
