@@ -20,9 +20,10 @@
      <input type="text" th:field="*{email}" id="email"/>
      <div style="color:red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</div>
      <br/>
-<!--     <label for="address">Enter address:</label>-->
-<!--     <input type="text" th:field="*{address}" id="address"/>-->
-<!--     <div style="color:red" th:if="${#fields.hasErrors('address')}" th:errors="*{address}">Address Error</div>-->
+     <label for="dateOfBirth">Enter your date of birth(dd/mm/yyyy):</label>
+     <input type="text" th:field="*{dateOfBirth}" id="dateOfBirth"/>
+     <div style="color:red" th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="*{dateOfBirth}">Date Of Birth Error</div>
+     <br/>
 
      <input type="submit" value="Create!"/>
  </form>

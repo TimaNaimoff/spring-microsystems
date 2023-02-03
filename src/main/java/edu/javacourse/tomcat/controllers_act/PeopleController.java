@@ -31,9 +31,9 @@ public class PeopleController {
     }
     @GetMapping()
     public String index(Model model) throws SQLException {
-        bookService.findByAuthorName("The Endless Book");
-        bookService.findByPerson(peopleService.findAll().get(0));
-        peopleService.test();
+//        bookService.findByAuthorName("The Endless Book");
+//        bookService.findByPerson(peopleService.findAll().get(0));
+//        peopleService.test();
         model.addAttribute("listOfPeoples",peopleService.findAll());
         return "/people/index";
     }

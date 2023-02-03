@@ -11,5 +11,7 @@ INSERT INTO person(name,age,email) VALUES('Jumbluqing',18,'sepherhervar@gmail.co
 INSERT INTO person(name,age,email) VALUES('Qollungirqi',27,'chansanuka@gmail.com');
 INSERT INTO person(name,age,email) VALUES('Arridjakren',16,'terekeren@gmail.com');
 
-
+ALTER TABLE person ADD COLUMN date_of_birth DATE;
+ALTER TABLE person ADD COLUMN created_time TIMESTAMP;
+ALTER TABLE person ADD COLUMN mood int;
 SELECT * FROM person;

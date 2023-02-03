@@ -1,6 +1,10 @@
 package edu.javacourse.tomcat.business;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -22,17 +26,26 @@ public class Person {
     @Email(message="Facepalm...")
     @Column(name="email")
     private String email;
+    @Column(name="date_of_birth")
+//    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern="dd/MM/yyyy")
+    private LocalDate dateOfBirth;
+    @Column(name="created_time")
+    private LocalDateTime createdTime;
 //    @Pattern(regexp = "[A-Z]\\w+, [A-Z]\\w+,\\d{6}",message="Your address should be in this format:" +
 //            " Country,City,Postal Code")
 //    private String address;
     @OneToMany(mappedBy="person")
     private List<Book> list;
 
-    public Person(Integer id,String name,int age,String email/*String address*/) {
+    @Enumerated(EnumType.ORDINAL)
+    private Mood mood;
+    public Person(Integer id,String name,int age,String email,LocalDate dateOfBirth/*String address*/) {
         this.id=id;
         this.name=name;
         this.age=age;
         this.email=email;
+        this.dateOfBirth=dateOfBirth;
 //        this.address=address;
     }
     public Person(String name,int age,String email/*String address*/) {
@@ -83,12 +96,36 @@ public class Person {
         this.email = email;
     }
 
-//    public String getAddress() {
+    public LocalDateTime getCreatedTime() {
+        return createdTime;
+    }
+
+    public void setCreatedTime(LocalDateTime createdTime) {
+        this.createdTime = createdTime;
+    }
+
+    public LocalDate getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(LocalDate dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+    //    public String getAddress() {
 //        return address;
 //    }
 //    public void setAddress(String address) {
 //        this.address = address;
 //    }
+
+    public Mood getMood() {
+        return mood;
+    }
+
+    public void setMood(Mood mood) {
+        this.mood = mood;
+    }
+
 
     @Override
     public String toString() {
