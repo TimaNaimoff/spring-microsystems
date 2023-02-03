@@ -6,6 +6,7 @@ import edu.javacourse.tomcat.business.Person;
 import javax.validation.Valid;
 
 //import edu.javacourse.tomcat.repo.PeopleRepository;
+import edu.javacourse.tomcat.dao.PersonerDao;
 import edu.javacourse.tomcat.services.BookService;
 import edu.javacourse.tomcat.services.PeopleService;
 import edu.javacourse.tomcat.utils.PersonValidator;
@@ -23,17 +24,20 @@ public class PeopleController {
     private final PeopleService peopleService;
     private final BookService bookService;
     private PersonValidator personValidator;
+    private final PersonerDao personerDao;
     @Autowired
-    public PeopleController(PeopleService peopleService,PersonValidator personValidator,BookService bookService){
+    public PeopleController(PeopleService peopleService,PersonValidator personValidator,BookService bookService,PersonerDao personerDao){
         this.peopleService=peopleService;
         this.personValidator=personValidator;
         this.bookService=bookService;
+        this.personerDao=personerDao;
     }
     @GetMapping()
     public String index(Model model) throws SQLException {
 //        bookService.findByAuthorName("The Endless Book");
 //        bookService.findByPerson(peopleService.findAll().get(0));
 //        peopleService.test();
+        personerDao.testNPlus1();
         model.addAttribute("listOfPeoples",peopleService.findAll());
         return "/people/index";
     }
