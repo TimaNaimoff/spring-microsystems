@@ -17,6 +17,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("/people")
@@ -78,4 +79,17 @@ public class PeopleController {
         peopleService.delete(id);
         return "redirect:/people";
       }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PeopleController that = (PeopleController) o;
+        return Objects.equals(peopleService, that.peopleService) && Objects.equals(bookService, that.bookService) && Objects.equals(personValidator, that.personValidator) && Objects.equals(personerDao, that.personerDao);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(peopleService, bookService, personValidator, personerDao);
+    }
 }
