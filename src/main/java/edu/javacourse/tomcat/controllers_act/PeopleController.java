@@ -24,7 +24,7 @@ import java.util.Objects;
 public class PeopleController {
     private final PeopleService peopleService;
     private final BookService bookService;
-    private PersonValidator personValidator;
+    private final PersonValidator personValidator;
     private final PersonerDao personerDao;
     @Autowired
     public PeopleController(PeopleService peopleService,PersonValidator personValidator,BookService bookService,PersonerDao personerDao){
@@ -44,8 +44,10 @@ public class PeopleController {
     }
     @GetMapping("/{id}")
     public String show(@PathVariable("id")int id,Model model){
-        model.addAttribute("person",peopleService.findOnePerson(id));
-//        model.addAttribute("books",dao.getBooksByPersonID(id));
+        Person person=peopleService.findOnePerson(id);
+        model.addAttribute("person",person);
+        System.out.println(bookService.findByPerson(person));
+        model.addAttribute("books",bookService.findByPerson(person));
         return "/people/show";
     }
     @GetMapping("/new")

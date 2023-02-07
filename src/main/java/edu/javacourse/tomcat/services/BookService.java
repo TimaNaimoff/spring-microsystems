@@ -4,8 +4,12 @@ import edu.javacourse.tomcat.business.Book;
 import edu.javacourse.tomcat.business.Person;
 import edu.javacourse.tomcat.repo.BooksRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -16,11 +20,18 @@ public class BookService {
     public BookService(BooksRepository booksRepository){
         this.booksRepository=booksRepository;
     }
+    public List<Book> findAll(int page,int counter){
+        return booksRepository.findAll(PageRequest.of(page,counter,Sort.by("year"))).getContent();
+    }
     public List<Book> findAll(){
         return booksRepository.findAll();
     }
     public Book getOneBook(int id){
         return booksRepository.findById(id).orElse(null);
+    }
+    public List<Book> findByTitle(String title){
+        List<Book>book=booksRepository.findByTitle(title);
+        return book;
     }
     @Transactional
     public void save(Book book){

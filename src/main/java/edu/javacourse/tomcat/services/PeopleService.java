@@ -25,7 +25,15 @@ public class PeopleService {
         System.out.println("Testing started");
     }
     public Person findOnePerson(int id){
-        return peopleRepository.findById(id).orElse(null);
+
+        Person person = peopleRepository.findById(id).orElse(null);
+        assert person != null;
+        if(person.getCreatedTime()==null||LocalDateTime.now().isBefore(person.getCreatedTime().plusDays(10))){
+            person.setStatus(false);
+        }
+
+        person.setStatus(true);
+        return person;
     }
     @Transactional
     public void save(Person person){

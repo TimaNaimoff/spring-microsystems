@@ -40,6 +40,8 @@ public class Person {
 
     @Enumerated(EnumType.ORDINAL)
     private Mood mood;
+    @Transient
+    private Boolean status;
     public Person(Integer id,String name,int age,String email,LocalDate dateOfBirth/*String address*/) {
         this.id=id;
         this.name=name;
@@ -48,7 +50,16 @@ public class Person {
         this.dateOfBirth=dateOfBirth;
 //        this.address=address;
     }
-    public Person(String name,int age,String email/*String address*/) {
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+
+    public Person(String name, int age, String email/*String address*/) {
         this.name=name;
         this.age=age;
         this.email=email;

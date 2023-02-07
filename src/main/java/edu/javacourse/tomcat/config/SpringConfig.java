@@ -42,7 +42,7 @@ import java.util.Properties;
 @EnableJpaRepositories("edu.javacourse.tomcat.repo")
 
 
-public class  SpringConfig implements WebMvcConfigurer {
+public class SpringConfig implements WebMvcConfigurer {
     private final Environment environment;
     private final ApplicationContext context;
     @Autowired

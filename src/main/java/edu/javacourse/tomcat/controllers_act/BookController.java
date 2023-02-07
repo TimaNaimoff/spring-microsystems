@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -29,6 +30,12 @@ public class BookController {
         return "/book/books";
 
     }
+    @GetMapping("/{id}/{id2}")
+    public String indexer(Model model,@PathVariable("id")int id,
+                          @PathVariable("id2")int id2){
+         model.addAttribute("books",bookService.findAll(id,id2));
+         return "/book/books";
+    }
     @GetMapping("/new")
     public String addNewBookGet(Model model){
         model.addAttribute("book",new Book());
@@ -39,6 +46,20 @@ public class BookController {
          bookService.save(book);
          return "redirect:/books";
      }
+     @GetMapping("/search")
+     public String search(Model model){
+        model.addAttribute("book",new Book());
+        return "/book/search";
+     }
+     @GetMapping("/searching")
+     public String searching(Model model,@ModelAttribute("book")Book book){
+          List<Book> booker=bookService.findByTitle(book.getTitle());
+          if(booker.size()==0)return "/book/not_found";
+          System.out.println(booker);
+          model.addAttribute("books",booker);
+          return "/book/found";
+     }
+
      @GetMapping("/{id}/update")
      public String getUpd(@PathVariable("id")int counter,@ModelAttribute("book")Book book){
         return "book/edit";
